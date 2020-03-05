@@ -177,6 +177,8 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   pid_mode                 = var.pid_mode
   requires_compatibilities = var.requires_compatibilities
   task_role_arn            = var.task_role_arn
+  cpu = var.cpu
+  memory = var.memory
 
   dynamic "placement_constraints" {
     for_each = var.placement_constraints
