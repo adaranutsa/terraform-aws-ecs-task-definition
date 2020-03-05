@@ -114,7 +114,6 @@ variable "linuxParameters" {
 variable "logConfiguration" {
   default     = {}
   description = "The log configuration specification for the container"
-  type        = map
 }
 
 variable "memory" {

@@ -175,10 +175,24 @@ resource "aws_ecs_task_definition" "ecs_task_definition" {
   ipc_mode                 = var.ipc_mode
   network_mode             = var.network_mode
   pid_mode                 = var.pid_mode
-  placement_constraints    = var.placement_constraints
   requires_compatibilities = var.requires_compatibilities
   task_role_arn            = var.task_role_arn
-  volume                   = var.volumes
+
+  dynamic "placement_constraints" {
+    for_each = var.placement_constraints
+    content {
+      type = placement_constraints.value["type"]
+      expression = placement_constraints.value["expression"]
+    }
+  }
+
+  dynamic "volume" {
+    for_each = var.volumes
+    content {
+      name = volume.value["name"]
+      host_path = volume.value["host_path"]
+    }
+  }
 
   count = var.register_task_definition ? 1 : 0
 }
